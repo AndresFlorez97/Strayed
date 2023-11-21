@@ -22,7 +22,7 @@ public class CombatePlayer : MonoBehaviour
         {
             tiempoProximoAtaque -= Time.deltaTime;
         }
-        if (Input.GetButtonDown("Fire1") && tiempoProximoAtaque <= 0)
+        if (Input.GetKeyDown(KeyCode.J) && tiempoProximoAtaque <= 0)
         {
             Golpe();
             tiempoProximoAtaque = tiempoEntreAtaques;

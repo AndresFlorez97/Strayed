@@ -78,7 +78,7 @@ public class MovimientoPlayer : MonoBehaviour
         #endregion
         //Invoca la pausa
         #region Pausar
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             Pausa();
         }
@@ -87,7 +87,7 @@ public class MovimientoPlayer : MonoBehaviour
         //Manejo del Dash
         #region Dash
         //Invoca la funciona del Dash
-        if (Input.GetKeyDown(KeyCode.E) && puedeDashear) 
+        if (Input.GetKeyDown(KeyCode.LeftShift) && puedeDashear) 
         {
             StartCoroutine(Dash());
         }
@@ -104,7 +104,7 @@ public class MovimientoPlayer : MonoBehaviour
             saltosRestantes = saltosExtras;
         }
         //Funcion de saltar al apretar la tecla espacio,Ademas se le agrega la funcion de doble salto 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             //Realizo el salto basico
             if (tocandoSuelo)
@@ -122,7 +122,7 @@ public class MovimientoPlayer : MonoBehaviour
 
         //Manje la habilidad de hacerce chiquito
         #region Achicar
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             if (seAchico)
             {
@@ -161,9 +161,10 @@ public class MovimientoPlayer : MonoBehaviour
 
         bool isFalling = rb2d.velocity.y < 0 && !tocandoSuelo;
         // Aplicar una gravedad personalizada para planear en el aire.
-        if (Input.GetKey(KeyCode.Q) && isFalling)
+        if (Input.GetKey(KeyCode.K) && isFalling)
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, Mathf.Clamp(rb2d.velocity.y, -velocidadCaida, float.MaxValue));
+            animacion.SetTrigger("Planea");
             Debug.Log("Estaria Planeando");
         }
         #endregion
