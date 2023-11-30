@@ -30,15 +30,23 @@ public class CombatePlayer : MonoBehaviour
     }
     private void Golpe()
     {
+        
+        Collider2D[] golpe = Physics2D.OverlapCircleAll(controladorGolpe.position, radioGolpe);
         animacion.SetTrigger("Ataca");
 
-        Collider2D[] golpe = Physics2D.OverlapCircleAll(controladorGolpe.position, radioGolpe);
-
-        foreach(Collider2D colisionador in golpe)
+        foreach (Collider2D colisionador in golpe)
         {
             if (colisionador.CompareTag("Enemigo"))
             {
-                colisionador.transform.GetComponent<ControladorEnemigo>().RecibeDaño(dañoGolpe);
+                //colisionador.transform.GetComponent<ControladorEnemigo>().RecibeDaño(dañoGolpe);
+                if (colisionador.CompareTag("Enemigo"))
+                {
+                    ControladorEnemigo controladorEnemigo = colisionador.GetComponent<ControladorEnemigo>();
+                    if (controladorEnemigo != null)
+                    {
+                        controladorEnemigo.RecibeDaño(dañoGolpe);
+                    }
+                }
             }
         }
     }

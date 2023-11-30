@@ -10,13 +10,7 @@ public class ControladorEnemigo : MonoBehaviour
     [SerializeField] private int vidaEnemigo;
 
     private bool movingRight = true;  // Variable para controlar la dirección de movimiento.
-    //private Collider2D col;
-    /*
-    private void Start()
-    {
-        col = GetComponent<Collider2D>();
-    }
-    */
+    
     private void OnDrawGizmos()
     {
         // Dibuja un gizmo para el área de patrullaje en el editor.
@@ -61,8 +55,8 @@ public class ControladorEnemigo : MonoBehaviour
 
     public void RecibeDaño(int daño)
     {
-        vidaEnemigo -= daño;
-        if(vidaEnemigo >= 0)
+        vidaEnemigo =- daño;
+        if(vidaEnemigo <= 0)
         {
             gameObject.SetActive(false);
             //Destroy(gameObject);

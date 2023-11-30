@@ -50,6 +50,9 @@ public class MovimientoPlayer : MonoBehaviour
     [Header("Combate")]
     public Vector2 velocidadRebote;
     public float tiempoPerdidaControl;
+    [SerializeField] private Transform controladorGolpe;
+    [SerializeField] private int dañoGolpe;
+    [SerializeField] private float radioGolpe;
 
     private Collider2D col;
     private Rigidbody2D rb2d;
@@ -138,6 +141,12 @@ public class MovimientoPlayer : MonoBehaviour
             }
         }
         #endregion
+
+        //Llamar a la animacion del Golpe,el llamado de la funcion lo tiene la animacion
+        if (Input.GetButtonDown("Fire1"))
+        {
+            animacion.SetTrigger("Ataca");
+        }
     }
 
     void FixedUpdate()
@@ -210,6 +219,32 @@ public class MovimientoPlayer : MonoBehaviour
 
     //Clases
 
+    //Es el que maneja el golpe,crea el area del golpe y es llamado en la animacion.
+    private void Golpe()
+    {
+        Collider2D[] golpe = Physics2D.OverlapCircleAll(controladorGolpe.position, radioGolpe);
+
+        foreach (Collider2D colisionador in golpe)
+        {
+            if (colisionador.CompareTag("Enemigo"))
+            {
+                if (colisionador.CompareTag("Enemigo"))
+                {
+                    ControladorEnemigo controladorEnemigo = colisionador.GetComponent<ControladorEnemigo>();
+                    if (controladorEnemigo != null)
+                    {
+                        controladorEnemigo.RecibeDaño(dañoGolpe);
+                    }
+                }
+            }
+        }
+    }
+    // Dibujar el area de golpe del guerrero
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
+    }
     //Funcion de Saltar
     void Salto()
     {
@@ -243,12 +278,6 @@ public class MovimientoPlayer : MonoBehaviour
         animacion.SetTrigger("RecibioDaño");
         Rebote(posicion);
         StartCoroutine(PerderControl());
-        /*
-        if (vidaRestante == 0)
-        {
-            GameOver();
-        }
-        */
     }
     //Corrutina de perdida de control
     private IEnumerator PerderControl()
@@ -293,6 +322,7 @@ public class MovimientoPlayer : MonoBehaviour
         }
     }
 
+    //Cuando al player le hacen daño rebota para el lado contrario
     public void Rebote(Vector2 puntoGolpe)
     {
         rb2d.velocity = new Vector2(-velocidadRebote.x * puntoGolpe.x, velocidadRebote.y);
