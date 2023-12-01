@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UIControlador : MonoBehaviour
 {
@@ -10,12 +11,19 @@ public class UIControlador : MonoBehaviour
     //Aca hay que depositar todos los demas panales que tenga le escena de menu
     public GameObject[] paneles;
 
+    //Variables que se necesitan para contabilizar los animales rescatados.
+    public TextMeshProUGUI contadorAnimales;
+
     private void Awake()
     {
         inicio.SetActive(true);
         DesactivarEscenas();
     }
 
+    public void Start()
+    {
+        ActualizarContador();
+    }
     //LLamada que desactiva todas las demas escenas
     void DesactivarEscenas()
     {
@@ -26,6 +34,13 @@ public class UIControlador : MonoBehaviour
                 panel.SetActive(false);
             }
         }
+    }
+   
+    //Esta clase actualiza en pantalla los animales rescatados
+    private void ActualizarContador()
+    {
+        // Actualiza el texto del contador con la cantidad de "Animales" recolectados
+        contadorAnimales.text = DatosGlobales.animalesRecolectadosGlobal.ToString();
     }
 
 
